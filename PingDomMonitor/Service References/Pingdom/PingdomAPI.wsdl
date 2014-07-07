@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="https://ws.pingdom.com/soap/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:typens="urn:PingdomAPI" xmlns="http://schemas.xmlsoap.org/wsdl/" name="PingdomAPI" targetNamespace="https://ws.pingdom.com/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:PingdomAPI">
+      <xsd:complexType name="Test_EchoResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="outString" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Auth_CredentialsData">
+        <xsd:all>
+          <xsd:element name="username" type="xsd:string" />
+          <xsd:element name="password" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Auth_LoginResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="sessionId" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Auth_LogoutResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Check_AddRemoveResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Check_GetListResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="checkNames" type="typens:Check_ListArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Check_ListArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="xsd:string[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Check_GetCheckIdsByNamesRequest">
+        <xsd:all>
+          <xsd:element name="checkNames" type="typens:Check_ListArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Check_GetCheckIdsByNamesResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="checkIds" type="typens:Check_CheckIdsArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Check_GetCheckURLRequest">
+        <xsd:all>
+          <xsd:element name="checkName" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Check_GetCheckURLResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="url" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Check_CheckIdsArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="xsd:int[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetLastDownsResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="lastDowns" type="typens:Report_LastDownsArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_LastDownsArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_LastDownEntry[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_LastDownEntry">
+        <xsd:all>
+          <xsd:element name="checkName" type="xsd:string" />
+          <xsd:element name="lastDown" type="xsd:dateTime" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetCurrentStatesResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="currentStates" type="typens:Report_CurrentStatesArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_CurrentStatesArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_CheckStateEntry[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_CheckStateEntry">
+        <xsd:all>
+          <xsd:element name="checkName" type="xsd:string" />
+          <xsd:element name="checkState" type="typens:Report_CheckState" />
+          <xsd:element name="lastCheckTime" type="xsd:dateTime" />
+          <xsd:element name="responseTime" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:simpleType name="Report_CheckState">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="CHECK_UP" />
+          <xsd:enumeration value="CHECK_DOWN" />
+          <xsd:enumeration value="CHECK_UNKNOWN" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Report_GetDowntimesRequest">
+        <xsd:all>
+          <xsd:element name="from" type="xsd:dateTime" />
+          <xsd:element name="to" type="xsd:dateTime" />
+          <xsd:element name="resolution" type="typens:Report_ResolutionEnum" />
+          <xsd:element name="checkName" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetResponseTimesRequest">
+        <xsd:all>
+          <xsd:element name="from" type="xsd:dateTime" />
+          <xsd:element name="to" type="xsd:dateTime" />
+          <xsd:element name="resolution" type="typens:Report_ResolutionEnum" />
+          <xsd:element name="checkName" type="xsd:string" />
+          <xsd:element name="locations" type="typens:Location_ListArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetNotificationsRequest">
+        <xsd:all>
+          <xsd:element name="checkNames" type="typens:Report_checkNamesArray" />
+          <xsd:element name="contacts" type="typens:Report_contactsArray" />
+          <xsd:element name="from" type="xsd:dateTime" />
+          <xsd:element name="to" type="xsd:dateTime" />
+          <xsd:element name="status" type="typens:Report_NotificationStatus" />
+          <xsd:element name="via" type="typens:Report_NotificationVia" />
+          <xsd:element name="pageNumber" type="xsd:int" />
+          <xsd:element name="resultsPerPage" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_checkNamesArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="xsd:string[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_contactsArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="xsd:string[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:simpleType name="Report_NotificationStatusItem">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="SENT" />
+          <xsd:enumeration value="DELIVERED" />
+          <xsd:enumeration value="NOT_DELIVERED" />
+          <xsd:enumeration value="NO_CREDITS" />
+          <xsd:enumeration value="ERROR" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Report_NotificationStatus">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_NotificationStatusItem[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:simpleType name="Report_NotificationViaItem">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="EMAIL" />
+          <xsd:enumeration value="SMS" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Report_NotificationVia">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_NotificationViaItem[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetOutagesRequest">
+        <xsd:all>
+          <xsd:element name="from" type="xsd:dateTime" />
+          <xsd:element name="to" type="xsd:dateTime" />
+          <xsd:element name="checkName" type="xsd:string" />
+          <xsd:element name="pageNumber" type="xsd:int" />
+          <xsd:element name="resultsPerPage" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetRawDataRequest">
+        <xsd:all>
+          <xsd:element name="from" type="xsd:dateTime" />
+          <xsd:element name="to" type="xsd:dateTime" />
+          <xsd:element name="checkName" type="xsd:string" />
+          <xsd:element name="pageNumber" type="xsd:int" />
+          <xsd:element name="resultsPerPage" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:simpleType name="Report_ResolutionEnum">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="DAILY" />
+          <xsd:enumeration value="WEEKLY" />
+          <xsd:enumeration value="MONTHLY" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="Check_CheckTypeEnum">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="HTTP" />
+          <xsd:enumeration value="TCP" />
+          <xsd:enumeration value="PING" />
+          <xsd:enumeration value="UDP" />
+          <xsd:enumeration value="SMTP" />
+          <xsd:enumeration value="POP3" />
+          <xsd:enumeration value="IMAP" />
+          <xsd:enumeration value="DNS" />
+          <xsd:enumeration value="HTTP_CUSTOM" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="Check_CheckParameterNameEnum">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="port" />
+          <xsd:enumeration value="url" />
+          <xsd:enumeration value="eregi" />
+          <xsd:enumeration value="expected_ip" />
+          <xsd:enumeration value="nameserver" />
+          <xsd:enumeration value="ssl" />
+          <xsd:enumeration value="authorization" />
+          <xsd:enumeration value="invert_eregi" />
+          <xsd:enumeration value="timeout" />
+          <xsd:enumeration value="expect" />
+          <xsd:enumeration value="header" />
+          <xsd:enumeration value="send" />
+          <xsd:enumeration value="hostname" />
+          <xsd:enumeration value="post" />
+          <xsd:enumeration value="username" />
+          <xsd:enumeration value="password" />
+          <xsd:enumeration value="additional_urls" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Report_GetDowntimesResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="downtimesArray" type="typens:Report_DowntimesArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_DowntimesArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_DowntimeEntry[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_DowntimeEntry">
+        <xsd:all>
+          <xsd:element name="from" type="xsd:dateTime" />
+          <xsd:element name="to" type="xsd:dateTime" />
+          <xsd:element name="duration" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Check_CheckParameterArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Check_CheckParameterEntry[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Check_CheckParameterEntry">
+        <xsd:all>
+          <xsd:element name="name" type="typens:Check_CheckParameterNameEnum" />
+          <xsd:element name="value" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetDowntimesExtendedResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="downtimesArray" type="typens:Report_DowntimesExtendedArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_DowntimesExtendedArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_DowntimeExtendedEntry[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_DowntimeExtendedEntry">
+        <xsd:all>
+          <xsd:element name="from" type="xsd:dateTime" />
+          <xsd:element name="to" type="xsd:dateTime" />
+          <xsd:element name="total_time" type="xsd:int" />
+          <xsd:element name="downtimes_duration" type="xsd:int" />
+          <xsd:element name="unknown_duration" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetOutagesResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="outagesArray" type="typens:Report_OutagesArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_OutagesArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_OutageEntry[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_OutageEntry">
+        <xsd:all>
+          <xsd:element name="from" type="xsd:dateTime" />
+          <xsd:element name="to" type="xsd:dateTime" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Location_ListArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="xsd:string[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_ResponseTimesArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_ResponseTimeEntry[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_ResponseTimeEntry">
+        <xsd:all>
+          <xsd:element name="from" type="xsd:dateTime" />
+          <xsd:element name="to" type="xsd:dateTime" />
+          <xsd:element name="responseTime" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetNotificationsResponseArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_GetNotificationsResponseItem[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetNotificationsResponseItem">
+        <xsd:all>
+          <xsd:element name="notificationTime" type="xsd:dateTime" />
+          <xsd:element name="check" type="xsd:string" />
+          <xsd:element name="contact" type="xsd:string" />
+          <xsd:element name="sentTo" type="xsd:string" />
+          <xsd:element name="messageType" type="xsd:string" />
+          <xsd:element name="messageStatus" type="xsd:string" />
+          <xsd:element name="cause" type="xsd:string" />
+          <xsd:element name="message" type="xsd:string" />
+          <xsd:element name="charged" type="xsd:boolean" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetRawDataResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="rawDataArray" type="typens:Report_RawDataArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_RawDataArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="typens:Report_RawDataEntry[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Report_RawDataEntry">
+        <xsd:all>
+          <xsd:element name="checkTime" type="xsd:dateTime" />
+          <xsd:element name="checkState" type="typens:Report_CheckState" />
+          <xsd:element name="responseTime" type="xsd:float" />
+          <xsd:element name="location" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Location_GetListResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="locationsArray" type="typens:Location_ListArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetResponseTimesResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="responseTimesArray" type="typens:Report_ResponseTimesArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Report_GetNotificationsResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="getNotificationsResponseArray" type="typens:Report_GetNotificationsResponseArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AccountData">
+        <xsd:all>
+          <xsd:element name="email" type="xsd:string" />
+          <xsd:element name="firstName" type="xsd:string" />
+          <xsd:element name="lastName" type="xsd:string" />
+          <xsd:element name="company" type="xsd:string" />
+          <xsd:element name="phoneCodeCountry" type="xsd:string" />
+          <xsd:element name="phoneNumber" type="xsd:string" />
+          <xsd:element name="cellPhoneCodeCountry" type="xsd:string" />
+          <xsd:element name="cellPhoneNumber" type="xsd:string" />
+          <xsd:element name="address" type="xsd:string" />
+          <xsd:element name="addressTwo" type="xsd:string" />
+          <xsd:element name="zip" type="xsd:string" />
+          <xsd:element name="city" type="xsd:string" />
+          <xsd:element name="state" type="xsd:string" />
+          <xsd:element name="countryISO" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" default="" name="signupSourceId" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" default="default" name="signupSourceCampaign" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:simpleType name="AccountType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="TRIAL" />
+          <xsd:enumeration value="BASIC_MONTHLY" />
+          <xsd:enumeration value="BASIC_YEARLY" />
+          <xsd:enumeration value="FREE" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="CreateAccountResponse">
+        <xsd:all>
+          <xsd:element name="status" type="xsd:int" />
+          <xsd:element name="password" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="echo_input">
+    <wsdl:part name="inString" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="echo_response">
+    <wsdl:part name="return" type="typens:Test_EchoResponse" />
+  </wsdl:message>
+  <wsdl:message name="login_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="credentialsData" type="typens:Auth_CredentialsData" />
+  </wsdl:message>
+  <wsdl:message name="login_response">
+    <wsdl:part name="return" type="typens:Auth_LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="logout_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="logout_response">
+    <wsdl:part name="return" type="typens:Auth_LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_check_names_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="get_check_names_response">
+    <wsdl:part name="return" type="typens:Check_GetListResponse" />
+  </wsdl:message>
+  <wsdl:message name="add_check_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="checkType" type="typens:Check_CheckTypeEnum" />
+    <wsdl:part name="hostname" type="xsd:string" />
+    <wsdl:part name="checkParameters" type="typens:Check_CheckParameterArray" />
+  </wsdl:message>
+  <wsdl:message name="add_check_response">
+    <wsdl:part name="return" type="typens:Check_AddRemoveResponse" />
+  </wsdl:message>
+  <wsdl:message name="remove_check_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="checkName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="remove_check_response">
+    <wsdl:part name="return" type="typens:Check_AddRemoveResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_check_ids_by_names_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="getCheckIdsByNamesRequest" type="typens:Check_GetCheckIdsByNamesRequest" />
+  </wsdl:message>
+  <wsdl:message name="get_check_ids_by_names_response">
+    <wsdl:part name="return" type="typens:Check_GetCheckIdsByNamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_check_url_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="getCheckURLRequest" type="typens:Check_GetCheckURLRequest" />
+  </wsdl:message>
+  <wsdl:message name="get_check_url_response">
+    <wsdl:part name="return" type="typens:Check_GetCheckURLResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_last_downs_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="get_last_downs_response">
+    <wsdl:part name="return" type="typens:Report_GetLastDownsResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_current_states_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="get_current_states_response">
+    <wsdl:part name="return" type="typens:Report_GetCurrentStatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_downtimes_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="getDowntimesRequest" type="typens:Report_GetDowntimesRequest" />
+  </wsdl:message>
+  <wsdl:message name="get_downtimes_response">
+    <wsdl:part name="return" type="typens:Report_GetDowntimesResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_downtimes_extended_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="getDowntimesRequest" type="typens:Report_GetDowntimesRequest" />
+  </wsdl:message>
+  <wsdl:message name="get_downtimes_extended_response">
+    <wsdl:part name="return" type="typens:Report_GetDowntimesExtendedResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_outages_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="getOutagesRequest" type="typens:Report_GetOutagesRequest" />
+  </wsdl:message>
+  <wsdl:message name="get_outages_response">
+    <wsdl:part name="return" type="typens:Report_GetOutagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_raw_data_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="getRawDataRequest" type="typens:Report_GetRawDataRequest" />
+  </wsdl:message>
+  <wsdl:message name="get_raw_data_response">
+    <wsdl:part name="return" type="typens:Report_GetRawDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_locations_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="get_locations_response">
+    <wsdl:part name="return" type="typens:Location_GetListResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_response_times_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="getResponseTimesRequest" type="typens:Report_GetResponseTimesRequest" />
+  </wsdl:message>
+  <wsdl:message name="get_response_times_response">
+    <wsdl:part name="return" type="typens:Report_GetResponseTimesResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_notifications_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="sessionId" type="xsd:string" />
+    <wsdl:part name="getNotificationsRequest" type="typens:Report_GetNotificationsRequest" />
+  </wsdl:message>
+  <wsdl:message name="get_notifications_response">
+    <wsdl:part name="return" type="typens:Report_GetNotificationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="create_account_input">
+    <wsdl:part name="APIKey" type="xsd:string" />
+    <wsdl:part name="accountData" type="typens:AccountData" />
+    <wsdl:part name="accountType" type="typens:AccountType" />
+    <wsdl:part name="url" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="create_account_response">
+    <wsdl:part name="return" type="typens:CreateAccountResponse" />
+  </wsdl:message>
+  <wsdl:portType name="PingdomAPISoapPort">
+    <wsdl:operation name="Test_echo">
+      <wsdl:input message="tns:echo_input" />
+      <wsdl:output message="tns:echo_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Auth_login">
+      <wsdl:input message="tns:login_input" />
+      <wsdl:output message="tns:login_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Auth_logout">
+      <wsdl:input message="tns:logout_input" />
+      <wsdl:output message="tns:logout_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Check_getList">
+      <wsdl:input message="tns:get_check_names_input" />
+      <wsdl:output message="tns:get_check_names_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Check_addCheck">
+      <wsdl:input message="tns:add_check_input" />
+      <wsdl:output message="tns:add_check_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Check_removeCheck">
+      <wsdl:input message="tns:remove_check_input" />
+      <wsdl:output message="tns:remove_check_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Check_getCheckIdsByNames">
+      <wsdl:input message="tns:get_check_ids_by_names_input" />
+      <wsdl:output message="tns:get_check_ids_by_names_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Check_getCheckURL">
+      <wsdl:input message="tns:get_check_url_input" />
+      <wsdl:output message="tns:get_check_url_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Report_getLastDowns">
+      <wsdl:input message="tns:get_last_downs_input" />
+      <wsdl:output message="tns:get_last_downs_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Report_getCurrentStates">
+      <wsdl:input message="tns:get_current_states_input" />
+      <wsdl:output message="tns:get_current_states_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Report_getDowntimes">
+      <wsdl:input message="tns:get_downtimes_input" />
+      <wsdl:output message="tns:get_downtimes_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Report_getDowntimesExtended">
+      <wsdl:input message="tns:get_downtimes_extended_input" />
+      <wsdl:output message="tns:get_downtimes_extended_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Report_getOutages">
+      <wsdl:input message="tns:get_outages_input" />
+      <wsdl:output message="tns:get_outages_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Report_getRawData">
+      <wsdl:input message="tns:get_raw_data_input" />
+      <wsdl:output message="tns:get_raw_data_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Location_getList">
+      <wsdl:input message="tns:get_locations_input" />
+      <wsdl:output message="tns:get_locations_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Report_getResponseTimes">
+      <wsdl:input message="tns:get_response_times_input" />
+      <wsdl:output message="tns:get_response_times_response" />
+    </wsdl:operation>
+    <wsdl:operation name="Report_getNotifications">
+      <wsdl:input message="tns:get_notifications_input" />
+      <wsdl:output message="tns:get_notifications_response" />
+    </wsdl:operation>
+    <wsdl:operation name="createAccount">
+      <wsdl:input message="tns:create_account_input" />
+      <wsdl:output message="tns:create_account_response" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PingdomAPISoapBinding" type="tns:PingdomAPISoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="Test_echo">
+      <soap:operation soapAction="urn:methods#Test_echo" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Auth_login">
+      <soap:operation soapAction="urn:methods#Auth_login" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Auth_logout">
+      <soap:operation soapAction="urn:methods#Auth_logout" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Check_getList">
+      <soap:operation soapAction="urn:methods#Check_getList" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Check_addCheck">
+      <soap:operation soapAction="urn:methods#Check_addCheck" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Check_removeCheck">
+      <soap:operation soapAction="urn:methods#Check_removeCheck" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Check_getCheckIdsByNames">
+      <soap:operation soapAction="urn:methods#Check_getCheckIdsByNames" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Check_getCheckURL">
+      <soap:operation soapAction="urn:methods#Check_getCheckURL" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Report_getLastDowns">
+      <soap:operation soapAction="urn:methods#Report_getLastDowns" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Report_getCurrentStates">
+      <soap:operation soapAction="urn:methods#Report_getCurrentStates" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Report_getDowntimes">
+      <soap:operation soapAction="urn:methods#Report_getDowntimes" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Report_getDowntimesExtended">
+      <soap:operation soapAction="urn:methods#Report_getDowntimesExtended" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Report_getOutages">
+      <soap:operation soapAction="urn:methods#Report_getOutages" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Report_getRawData">
+      <soap:operation soapAction="urn:methods#Report_getRawData" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Location_getList">
+      <soap:operation soapAction="urn:methods#Location_getList" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Report_getResponseTimes">
+      <soap:operation soapAction="urn:methods#Report_getResponseTimes" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Report_getNotifications">
+      <soap:operation soapAction="urn:methods#Report_getNotifications" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createAccount">
+      <soap:operation soapAction="urn:methods#createAccount" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:methods" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PingdomAPI">
+    <wsdl:port name="PingdomAPISoapPort" binding="tns:PingdomAPISoapBinding">
+      <soap:address location="https://ws.pingdom.com/soap/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

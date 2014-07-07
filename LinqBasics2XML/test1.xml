@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <customer>
+    <name>Alexis</name>
+    <surname>Jare</surname>
+  </customer>
+
+  <customer>
+    <name>Baldee</name>
+    <surname>Jare</surname>
+  </customer>
+
+  <customer>
+    <name>Cezeer</name>
+    <surname>Jare</surname>
+  </customer>
+</root>

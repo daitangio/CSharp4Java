@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 10.25" name="StudioLinq2SQL">
+  <DataContextMoniker Name="/StudioLinq2SQLDataContext" />
+  <nestedChildShapes>
+    <classShape Id="be1c48f4-e50d-46ef-aca5-b7f0982b6368" absoluteBounds="0.75, 1, 2, 1.0961531575520838">
+      <DataClassMoniker Name="/StudioLinq2SQLDataContext/Category" />
+      <nestedChildShapes>
+        <elementListCompartment Id="679e7d73-e117-4e94-ac79-d24c9de14bb9" absoluteBounds="0.765, 1.46, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="334b4e4c-b544-4747-825d-cb0b80ae6fa2" absoluteBounds="6.25, 0.875, 2, 1.4248478190104166">
+      <DataClassMoniker Name="/StudioLinq2SQLDataContext/OrderDetail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6808f176-d2e5-422b-9d4b-f9aa38928a56" absoluteBounds="6.265, 1.335, 1.9700000000000002, 0.86484781901041674" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b822c8c6-09fc-4389-95ee-3142d3f955ab" absoluteBounds="3.5, 4, 2, 1.2605004882812505">
+      <DataClassMoniker Name="/StudioLinq2SQLDataContext/Order" />
+      <nestedChildShapes>
+        <elementListCompartment Id="af28dc36-8af4-4905-af21-b729556b4e98" absoluteBounds="3.515, 4.46, 1.9700000000000002, 0.70050048828125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a86e5249-3423-47d6-8db7-67efc6800c97" absoluteBounds="3.5, 1, 2, 1.2605004882812498">
+      <DataClassMoniker Name="/StudioLinq2SQLDataContext/Product" />
+      <nestedChildShapes>
+        <elementListCompartment Id="be9c9c94-b4ac-4844-875c-e5a8d40c1ea1" absoluteBounds="3.515, 1.46, 1.9700000000000002, 0.70050048828125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 4.63025024414063); (7.25 : 4.63025024414063); (7.25 : 2.29984781901042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/StudioLinq2SQLDataContext/Order/Order_OrderDetail" />
+      <nodes>
+        <classShapeMoniker Id="b822c8c6-09fc-4389-95ee-3142d3f955ab" />
+        <classShapeMoniker Id="334b4e4c-b544-4747-825d-cb0b80ae6fa2" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 1.63025024414062); (6.25 : 1.63025024414062)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/StudioLinq2SQLDataContext/Product/Product_OrderDetail" />
+      <nodes>
+        <classShapeMoniker Id="a86e5249-3423-47d6-8db7-67efc6800c97" />
+        <classShapeMoniker Id="334b4e4c-b544-4747-825d-cb0b80ae6fa2" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 1.54807657877604); (3.5 : 1.54807657877604)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/StudioLinq2SQLDataContext/Category/Category_Product" />
+      <nodes>
+        <classShapeMoniker Id="be1c48f4-e50d-46ef-aca5-b7f0982b6368" />
+        <classShapeMoniker Id="a86e5249-3423-47d6-8db7-67efc6800c97" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="67210dca-ea2e-4a0a-93a3-563090a6a1ad" absoluteBounds="0.5, 3.5, 2, 1.0961531575520833">
+      <DataClassMoniker Name="/StudioLinq2SQLDataContext/StudioConfig" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9b24bd6d-a3b0-42e4-a5ab-fa68f4a2f747" absoluteBounds="0.51500000000000012, 3.96, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="66a6b0b0-ecf5-4ae9-b968-03517c38c3e0" absoluteBounds="3.5, 6.875, 2, 1.0961531575520844">
+      <DataClassMoniker Name="/StudioLinq2SQLDataContext/Customer2Software" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6000a844-ed9a-4a48-b445-5edd12a8d933" absoluteBounds="3.515, 7.335, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8eb6185d-02c5-4a45-964f-c809b4e2e6f2" absoluteBounds="0.75, 6.875, 2, 1.0961531575520844">
+      <DataClassMoniker Name="/StudioLinq2SQLDataContext/SoftwareProduct" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f1d98e4c-97a6-4784-926b-d45ed4ed7028" absoluteBounds="0.765, 7.335, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a4ae986b-2e6e-401a-b0f0-92157c88f9af" absoluteBounds="0.75, 8.875, 2, 1.0961531575520844">
+      <DataClassMoniker Name="/StudioLinq2SQLDataContext/SoftwareCustomer" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a3aab381-01a1-4cee-a8aa-d5793f161fe9" absoluteBounds="0.765, 9.335, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 7.42307657877604); (3.5 : 7.42307657877604)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/StudioLinq2SQLDataContext/SoftwareProduct/SoftwareProduct_Customer2Software" />
+      <nodes>
+        <classShapeMoniker Id="8eb6185d-02c5-4a45-964f-c809b4e2e6f2" />
+        <classShapeMoniker Id="66a6b0b0-ecf5-4ae9-b968-03517c38c3e0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 9.42307657877604); (4.5 : 9.42307657877604); (4.5 : 7.97115315755208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/StudioLinq2SQLDataContext/SoftwareCustomer/SoftwareCustomer_Customer2Software" />
+      <nodes>
+        <classShapeMoniker Id="a4ae986b-2e6e-401a-b0f0-92157c88f9af" />
+        <classShapeMoniker Id="66a6b0b0-ecf5-4ae9-b968-03517c38c3e0" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

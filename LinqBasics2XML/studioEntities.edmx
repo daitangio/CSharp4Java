@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="studioModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+        <EntityContainer Name="studioModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="studioModel.Store.Categories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Customer2Software" EntityType="studioModel.Store.Customer2Software" store:Type="Tables" store:Schema="dbo" store:Name="Customer2Software">
+            <DefiningQuery>SELECT 
+      [Customer2Software].[Customer] AS [Customer], 
+      [Customer2Software].[Software] AS [Software]
+      FROM [dbo].[Customer2Software] AS [Customer2Software]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OrderDetails" EntityType="studioModel.Store.OrderDetails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Orders" EntityType="studioModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Products" EntityType="studioModel.Store.Products" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SoftwareCustomer" EntityType="studioModel.Store.SoftwareCustomer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SoftwareProduct" EntityType="studioModel.Store.SoftwareProduct" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__OrderDeta__Order__0DAF0CB0" Association="studioModel.Store.FK__OrderDeta__Order__0DAF0CB0">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Produ__0EA330E9" Association="studioModel.Store.FK__OrderDeta__Produ__0EA330E9">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Products__Catego__07020F21" Association="studioModel.Store.FK__Products__Catego__07020F21">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer2Software_SoftwareCustomer" Association="studioModel.Store.FK_Customer2Software_SoftwareCustomer">
+            <End Role="SoftwareCustomer" EntitySet="SoftwareCustomer" />
+            <End Role="Customer2Software" EntitySet="Customer2Software" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer2Software_SoftwareProduct" Association="studioModel.Store.FK_Customer2Software_SoftwareProduct">
+            <End Role="SoftwareProduct" EntitySet="SoftwareProduct" />
+            <End Role="Customer2Software" EntitySet="Customer2Software" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'studio.dbo.Customer2Software' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="Customer2Software">
+          <Key>
+            <PropertyRef Name="Customer" />
+            <PropertyRef Name="Software" />
+          </Key>
+          <Property Name="Customer" Type="int" Nullable="false" />
+          <Property Name="Software" Type="nvarchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="ShipCountry" Type="varchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="CategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="SoftwareCustomer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="description" Type="nvarchar" Nullable="false" MaxLength="90" />
+        </EntityType>
+        <EntityType Name="SoftwareProduct">
+          <Key>
+            <PropertyRef Name="ProductCode" />
+          </Key>
+          <Property Name="ProductCode" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="description" Type="nvarchar" MaxLength="160" />
+        </EntityType>
+        <Association Name="FK__OrderDeta__Order__0DAF0CB0">
+          <End Role="Orders" Type="studioModel.Store.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="studioModel.Store.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Produ__0EA330E9">
+          <End Role="Products" Type="studioModel.Store.Products" Multiplicity="1" />
+          <End Role="OrderDetails" Type="studioModel.Store.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Products__Catego__07020F21">
+          <End Role="Categories" Type="studioModel.Store.Categories" Multiplicity="0..1" />
+          <End Role="Products" Type="studioModel.Store.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer2Software_SoftwareCustomer">
+          <End Role="SoftwareCustomer" Type="studioModel.Store.SoftwareCustomer" Multiplicity="1" />
+          <End Role="Customer2Software" Type="studioModel.Store.Customer2Software" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoftwareCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Customer2Software">
+              <PropertyRef Name="Customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer2Software_SoftwareProduct">
+          <End Role="SoftwareProduct" Type="studioModel.Store.SoftwareProduct" Multiplicity="1" />
+          <End Role="Customer2Software" Type="studioModel.Store.Customer2Software" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoftwareProduct">
+              <PropertyRef Name="ProductCode" />
+            </Principal>
+            <Dependent Role="Customer2Software">
+              <PropertyRef Name="Software" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="studioModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+        <EntityContainer Name="studioEntities">
+          <EntitySet Name="Categories" EntityType="studioModel.Categories" />
+          <EntitySet Name="OrderDetails" EntityType="studioModel.OrderDetails" />
+          <EntitySet Name="Orders" EntityType="studioModel.Orders" />
+          <EntitySet Name="Products" EntityType="studioModel.Products" />
+          <EntitySet Name="SoftwareCustomer" EntityType="studioModel.SoftwareCustomer" />
+          <EntitySet Name="SoftwareProduct" EntityType="studioModel.SoftwareProduct" />
+          <AssociationSet Name="FK__Products__Catego__07020F21" Association="studioModel.FK__Products__Catego__07020F21">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Order__0DAF0CB0" Association="studioModel.FK__OrderDeta__Order__0DAF0CB0">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderDeta__Produ__0EA330E9" Association="studioModel.FK__OrderDeta__Produ__0EA330E9">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="Customer2Software" Association="studioModel.Customer2Software">
+            <End Role="SoftwareCustomer" EntitySet="SoftwareCustomer" />
+            <End Role="SoftwareProduct" EntitySet="SoftwareProduct" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Products" Relationship="studioModel.FK__Products__Catego__07020F21" FromRole="Categories" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="studioModel.FK__OrderDeta__Order__0DAF0CB0" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="Products" Relationship="studioModel.FK__OrderDeta__Produ__0EA330E9" FromRole="OrderDetails" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" />
+          <Property Name="ShipCountry" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="OrderDetails" Relationship="studioModel.FK__OrderDeta__Order__0DAF0CB0" FromRole="Orders" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Categories" Relationship="studioModel.FK__Products__Catego__07020F21" FromRole="Products" ToRole="Categories" />
+          <NavigationProperty Name="OrderDetails" Relationship="studioModel.FK__OrderDeta__Produ__0EA330E9" FromRole="Products" ToRole="OrderDetails" />
+        </EntityType>
+        <EntityType Name="SoftwareCustomer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="90" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="SoftwareProduct" Relationship="studioModel.Customer2Software" FromRole="SoftwareCustomer" ToRole="SoftwareProduct" />
+        </EntityType>
+        <EntityType Name="SoftwareProduct">
+          <Key>
+            <PropertyRef Name="ProductCode" />
+          </Key>
+          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="description" Type="String" MaxLength="160" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="SoftwareCustomer" Relationship="studioModel.Customer2Software" FromRole="SoftwareProduct" ToRole="SoftwareCustomer" />
+        </EntityType>
+        <Association Name="FK__Products__Catego__07020F21">
+          <End Role="Categories" Type="studioModel.Categories" Multiplicity="0..1" />
+          <End Role="Products" Type="studioModel.Products" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__OrderDeta__Order__0DAF0CB0">
+          <End Role="Orders" Type="studioModel.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="studioModel.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderDeta__Produ__0EA330E9">
+          <End Role="Products" Type="studioModel.Products" Multiplicity="1" />
+          <End Role="OrderDetails" Type="studioModel.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Customer2Software">
+          <End Role="SoftwareCustomer" Type="studioModel.SoftwareCustomer" Multiplicity="*" />
+          <End Role="SoftwareProduct" Type="studioModel.SoftwareProduct" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
+        <EntityContainerMapping StorageEntityContainer="studioModelStoreContainer" CdmEntityContainer="studioEntities">
+          <EntitySetMapping Name="Categories"><EntityTypeMapping TypeName="studioModel.Categories"><MappingFragment StoreEntitySet="Categories">
+            <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+            <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails"><EntityTypeMapping TypeName="studioModel.OrderDetails"><MappingFragment StoreEntitySet="OrderDetails">
+            <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+            <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+            <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Orders"><EntityTypeMapping TypeName="studioModel.Orders"><MappingFragment StoreEntitySet="Orders">
+            <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+            <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+            <ScalarProperty Name="ShipCountry" ColumnName="ShipCountry" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Products"><EntityTypeMapping TypeName="studioModel.Products"><MappingFragment StoreEntitySet="Products">
+            <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SoftwareCustomer"><EntityTypeMapping TypeName="studioModel.SoftwareCustomer"><MappingFragment StoreEntitySet="SoftwareCustomer">
+            <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+            <ScalarProperty Name="description" ColumnName="description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SoftwareProduct"><EntityTypeMapping TypeName="studioModel.SoftwareProduct"><MappingFragment StoreEntitySet="SoftwareProduct">
+            <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+            <ScalarProperty Name="description" ColumnName="description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="FK__Products__Catego__07020F21" TypeName="studioModel.FK__Products__Catego__07020F21" StoreEntitySet="Products">
+            <EndProperty Name="Categories">
+              <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+            </EndProperty>
+            <EndProperty Name="Products">
+              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            </EndProperty>
+            <Condition ColumnName="CategoryID" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__OrderDeta__Order__0DAF0CB0" TypeName="studioModel.FK__OrderDeta__Order__0DAF0CB0" StoreEntitySet="OrderDetails">
+            <EndProperty Name="Orders">
+              <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+            </EndProperty>
+            <EndProperty Name="OrderDetails">
+              <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__OrderDeta__Produ__0EA330E9" TypeName="studioModel.FK__OrderDeta__Produ__0EA330E9" StoreEntitySet="OrderDetails">
+            <EndProperty Name="Products">
+              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            </EndProperty>
+            <EndProperty Name="OrderDetails">
+              <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Customer2Software" TypeName="studioModel.Customer2Software" StoreEntitySet="Customer2Software">
+            <EndProperty Name="SoftwareCustomer">
+              <ScalarProperty Name="CustomerID" ColumnName="Customer" />
+            </EndProperty>
+            <EndProperty Name="SoftwareProduct">
+              <ScalarProperty Name="ProductCode" ColumnName="Software" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="studioEntities">
+        <EntityTypeShape EntityType="studioModel.Categories" Width="1.5" PointX="0.75" PointY="1.125" Height="1.427958984375" IsExpanded="true" />
+        <EntityTypeShape EntityType="studioModel.OrderDetails" Width="1.5" PointX="5.25" PointY="0.875" Height="1.9210009765624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="studioModel.Orders" Width="1.5" PointX="2.625" PointY="4.125" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="studioModel.Products" Width="1.5" PointX="3" PointY="1.125" Height="1.5923063151041654" IsExpanded="true" />
+        <EntityTypeShape EntityType="studioModel.SoftwareCustomer" Width="1.5" PointX="5.75" PointY="3.875" Height="1.4279589843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="studioModel.SoftwareProduct" Width="1.5" PointX="8" PointY="3.875" Height="1.4279589843749996" IsExpanded="true" />
+        <AssociationConnector Association="studioModel.FK__Products__Catego__07020F21" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="1.8389794921875" />
+          <ConnectorPoint PointX="2.6979166666666665" PointY="1.8389794921874993" />
+          <ConnectorPoint PointX="2.8645833333333335" PointY="1.8389794921875" />
+          <ConnectorPoint PointX="3" PointY="1.8389794921875" />
+        </AssociationConnector>
+        <AssociationConnector Association="studioModel.FK__OrderDeta__Order__0DAF0CB0" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.78125" PointY="4.125" />
+          <ConnectorPoint PointX="2.78125" PointY="0.96875" />
+          <ConnectorPoint PointX="5.25" PointY="0.96875" />
+        </AssociationConnector>
+        <AssociationConnector Association="studioModel.FK__OrderDeta__Produ__0EA330E9" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="1.9211531575520828" />
+          <ConnectorPoint PointX="5.25" PointY="1.9211531575520828" />
+        </AssociationConnector>
+        <AssociationConnector Association="studioModel.Customer2Software" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.25" PointY="4.5889794921875" />
+          <ConnectorPoint PointX="8" PointY="4.5889794921875" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
