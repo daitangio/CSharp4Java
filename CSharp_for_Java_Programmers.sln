@@ -16,7 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D2E3CABE-9CDB-485C-AB48-DAF8A2FA194C}"
 	ProjectSection(SolutionItems) = preProject
 		CSharp_for_Java_Programmers.vsmdi = CSharp_for_Java_Programmers.vsmdi
+		LICENSE = LICENSE
 		Local.testsettings = Local.testsettings
+		README.md = README.md
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
@@ -37,6 +39,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingDomMonitor", "PingDomMonitor\PingDomMonitor.csproj", "{5893B6BE-4456-4BE3-81B6-0E5970A8F6F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroWebServer", "MicroWebServer\MicroWebServer.csproj", "{A550982A-A7F0-4BB4-AB2A-E570B3F7BF7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharp4", "CSharp4", "{D485E471-C480-4ABB-A64E-DB136D7AB673}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp45FeatureExample", "CSharp45FeatureExample\CSharp45FeatureExample.csproj", "{7599DA0C-ABB8-4D52-903F-BDE75EF02507}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -138,6 +144,16 @@ Global
 		{A550982A-A7F0-4BB4-AB2A-E570B3F7BF7D}.Release|Mixed Platforms.Build.0 = Release|x86
 		{A550982A-A7F0-4BB4-AB2A-E570B3F7BF7D}.Release|x86.ActiveCfg = Release|x86
 		{A550982A-A7F0-4BB4-AB2A-E570B3F7BF7D}.Release|x86.Build.0 = Release|x86
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +163,7 @@ Global
 		{87E9FCEC-6E2C-4320-80A4-3C31C82757B9} = {72918B1C-6ED9-4D86-892D-F63206135114}
 		{870E0058-ECD0-4C3F-8775-C7FF5D3D7A13} = {72918B1C-6ED9-4D86-892D-F63206135114}
 		{D231537E-AC32-4A25-B820-B1C505A8A5E8} = {403FFB23-D6BF-4B82-A597-226E71F833CC}
+		{7599DA0C-ABB8-4D52-903F-BDE75EF02507} = {D485E471-C480-4ABB-A64E-DB136D7AB673}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CSharp_for_Java_Programmers.vsmdi

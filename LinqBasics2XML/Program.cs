@@ -10,6 +10,11 @@ using System.Data.Linq.Mapping;
 
 using System.Xml.Linq;
 
+/* To use in mono 3.0.x+ copy
+   /c/Windows/winsxs/x86_netfx35linq-system.data.entity_31bf3856ad364e35_6.1.7601.17514_none_351ba0ba39d5bcbe/System.Data.Entity.dll
+ in the bin/ directory
+
+*/
 namespace LinqBasics2XML
 {
 
@@ -31,8 +36,11 @@ namespace LinqBasics2XML
 
             IEnumerable<XElement> secondVariant = 
                 x.Descendants("customer").Descendants("name").AsEnumerable();
-
             say("Customer names", secondVariant);
+
+            say("Attribute access:",
+                x.Descendants("customer").Where(v => v.Attribute("selectMe").Value == "true"));
+
             List<XElement> xlist=x.Descendants("customer").ToList<XElement>();
             say("List to convert", xlist);
             var procName=Process.GetCurrentProcess().ProcessName;
@@ -40,7 +48,7 @@ namespace LinqBasics2XML
             say(procName+" Private Bytes::"+p.NextValue());
 
 
-
+            /*
             say("Entity Framework Access: better many2many access. Namespaces cannot be mixed");
             studioEntities s = new studioEntities();
             say("Many 2 Many",
@@ -48,7 +56,8 @@ namespace LinqBasics2XML
                      from csp in cs.SoftwareProduct
                      select cs.description + " buyed " + csp.description
              );
-
+            */
+            Console.WriteLine("Press enter to exit");
             Console.ReadLine();
         }
 

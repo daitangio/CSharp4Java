@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <customer>
+  <customer selectMe="false">
     <name>Alexis</name>
     <surname>Jare</surname>
   </customer>
 
-  <customer>
+  <customer selectMe="true">
     <name>Baldee</name>
     <surname>Jare</surname>
   </customer>
 
-  <customer>
+  <customer selectMe="false">
     <name>Cezeer</name>
     <surname>Jare</surname>
   </customer>
