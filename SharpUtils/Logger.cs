@@ -4,6 +4,7 @@ using System.Linq;
 //using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 //using Microsoft.Practices.EnterpriseLibrary.Logging;
 using System.ComponentModel;
+using System.Runtime.CompilerServices; 
 
 namespace SharpUtils.Logger
 {
@@ -47,26 +48,41 @@ namespace SharpUtils.Logger
 
     }
 
+    public enum AuditAction
+    {
+        CREATE,UPDATE,DELETE,QUERY,
+        INCIDENT
 
+    }
+    /// <summary>
+    /// This class also support minimal auditing capability
+    /// </summary>
     public class Logger
     {
         //private LogWriter myLogWriter;
         private string category { get; set; }
        
+        
 
         /// <summary>
         /// Vedi http://stackoverflow.com/questions/40730/how-do-you-give-a-c-auto-property-a-default-value
         /// </summary>
         [Description("Parametro globale per abilitare dinamicamente debug log. Può essere impostato in qualsiasi momento"),
                 System.ComponentModel.DefaultValue(true)]
-        public static Boolean DefaultDebugMode  { get; set; } 
+        public static Boolean DefaultDebugMode  { get; set; }
 
-        
+        [Description("Diagnostic audit path")]
+        public String AuditFilePath { get; set; }
+
         private static Boolean EnableConsoleOutputFlag = true;
 
         private Logger(string id)
         {
             this.category = id;
+            if (string.IsNullOrEmpty(AuditFilePath))
+            {
+                AuditFilePath= System.Environment.GetEnvironmentVariable("TEMP");
+            }
             //myLogWriter= EnterpriseLibraryContainer.Current.GetInstance<LogWriter>();           
         }
 
@@ -108,7 +124,7 @@ namespace SharpUtils.Logger
         }
 
 
-
+        // WORKS ONLY ON .NET 4.5::::: [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void debug(String msg)
         {
             if (DefaultDebugMode)
@@ -134,7 +150,20 @@ namespace SharpUtils.Logger
         }
 
 
-        //public void audit()
+        public void audit(AuditAction action,Object obj){
+            String f = AuditFilePath + "\\" + "audit.log";
+            String msg = "AUDIT::"+action.ToString() + " " + obj;
+            if (action == AuditAction.INCIDENT)
+            {
+                error(msg);
+            }
+            else
+            {
+                debug(msg);
+            }
+            
+            System.IO.File.AppendAllText(f,msg+"\n\r");
+        }
 
 
         private void logMsg(string msg, TraceEventType severity)
@@ -158,16 +187,29 @@ namespace SharpUtils.Logger
             if (EnableConsoleOutputFlag)
             {
                 String outmsg;
-                if (LoggerNDC.GetNDC().Equals(""))
+
+                if (severity == TraceEventType.Verbose)
                 {
-                    outmsg = "@[] " + msg;
+                    outmsg = "<D>";
                 }
                 else
                 {
-                    outmsg = "@[ " + LoggerNDC.GetNDC() + " ] " + msg;
+                    outmsg = "<" + severity.ToString().Substring(0, 1) + "> ";
                 }
 
-                Console.WriteLine("["+this.category+"] "+outmsg);
+
+                outmsg += "["+this.category+"] ";
+                if (LoggerNDC.GetNDC().Equals(""))
+                {
+                    outmsg += "@[] " + msg;
+                }
+                else
+                {
+                    outmsg += "@[ " + LoggerNDC.GetNDC() + " ] " + msg;
+                }
+
+                // TODO: Convert severity
+                Console.WriteLine(outmsg);
             }
         }
 

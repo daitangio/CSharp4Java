@@ -3,8 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+
 namespace SharpUtils
 {
+
+    /// <summary>
+    /// The <see cref="SharpUtils"/> namespace contains minimal utility classes needed for
+    /// industrial-grade deployment:
+    /// A minimal log system
+    /// A minimal ini file reader (no complex xml)
+    /// A minimal audit system
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    {
+        /* See http://stackoverflow.com/questions/156582/namespace-documentation-on-a-net-project-sandcastle
+         * for proper usage */
+    }
 
     /** Simple property file are far easier then complex XML stuff
      * Taken from http://stackoverflow.com/a/16972767/75540
