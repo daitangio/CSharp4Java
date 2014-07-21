@@ -105,6 +105,18 @@ namespace SharpUtils
         {
             return GetValue(p, "", "false").Equals("true", StringComparison.CurrentCultureIgnoreCase);
         }
+
+
+        public Dictionary<string, string>  GetSectionConfig(String section)
+        {
+            if (!ini.ContainsKey(section))
+            {
+                throw new UnknownSection(section);
+            }
+                
+
+            return ini[section];
+        }
     }
     public enum Config
     {
